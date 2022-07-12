@@ -81,6 +81,12 @@ export function convertItem(item) {
     inputType: inputTypeMap(item.type)
   };
 
+  // Get the item's expected unit, if specified by extension
+  let unit = getUnitFromExtensions(item.extension);
+  if (unit) {
+    converted.description = unit.code + ' ' + '(' + unit.display + ')';
+  }
+
   // Get the item's title, which may be calculated by an expression
   let extendedText = getTextExtensions(item._text); // Note: https://www.hl7.org/fhir/json.html#primitive
   let calculatedValues = [];
@@ -331,4 +337,20 @@ export function extractVisibility(item) {
     });
   }
   return visibleIf;
+}
+
+/**
+ * Returns the first unit declared within the given list of extensions
+ * @param {array} extensions - an array of FHIR extensions
+ * @returns {(object|void)} - a FHIR Coding object for the unit, if one exists
+ */
+export function getUnitFromExtensions(extensions) {
+  let calcRegExp = /^http:\/\/hl7\.org\/fhir\/StructureDefinition\/questionnaire-unit/;
+  let unitExtension = extensions.find(ext => calcRegExp.test(ext.url));
+  if (unitExtension && unitExtension.valueCoding) {
+    return unitExtension.valueCoding;
+  }
+  else {
+    return;
+  }
 }
