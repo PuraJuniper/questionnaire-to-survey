@@ -345,7 +345,7 @@ export function extractVisibility(item) {
  * @returns {(object|void)} - a FHIR Coding object for the unit, if one exists
  */
 export function getUnitFromExtensions(extensions) {
-  let calcRegExp = /^http:\/\/hl7\.org\/fhir\/StructureDefinition\/questionnaire-unit/;
+  let calcRegExp = /^http:\/\/hl7\.org\/fhir\/StructureDefinition\/questionnaire-unit(Option)?/;
   let unitExtension = extensions.find(ext => calcRegExp.test(ext.url));
   if (unitExtension && unitExtension.valueCoding) {
     return unitExtension.valueCoding;
