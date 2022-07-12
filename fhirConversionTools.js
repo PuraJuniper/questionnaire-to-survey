@@ -181,6 +181,7 @@ export function typeMap(fhirItemType, fhirItemRepeats = false) {
     case 'text': return 'comment';
     case 'time': return 'text';
     case 'url': return 'text';
+    case 'quantity': return 'text';
     default:
       throw new Error('Unsupported item type.');
   }
@@ -200,6 +201,7 @@ export function inputTypeMap(fhirItemType) {
     case 'string': return 'text';
     case 'time': return 'time';
     case 'url': return 'url';
+    case 'quantity': return 'number';
     default: null
   }
 }
