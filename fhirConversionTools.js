@@ -82,8 +82,10 @@ export function convertItem(item) {
   };
 
   // Get the item's expected unit, if specified by extension
-  let unit = getUnitFromExtensions(item.extension);
-  if (unit) {
+  let unit = item.extension !== undefined
+    ? getUnitFromExtensions(item.extension)
+    : undefined;
+  if (unit !== undefined) {
     converted.description = unit.code + ' ' + '(' + unit.display + ')';
   }
 
